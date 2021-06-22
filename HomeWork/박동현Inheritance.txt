@@ -1,0 +1,25 @@
+[1]
+super(10), this(10)
+
+[2]
+b 3
+//class Ex의 print 함수가 실행되어서 "b "가 출력된다.
+//ob.a를 출력하면 상위클래스 멤버변수 a인 "3"이 출력된다.
+
+[3]
+1234
+
+[4]
+매개변수가 없는 같은 형태의 메소드를 생성하였기 때문에 중복이 되서 컴파일 되지 않는다.
+
+[5]
+public static void main(String[] args) {
+	Ex o = new Ex();	//Ex 클래스 객체 생성
+	Test i = new Test(); //Test 클래스 객체 생성
+	int n = 10;
+	i.setX(n); // Test 클래스의 멤버변수 x에 n의값 10을 넣는 함수
+	o.setY(i); // EX 클래스의 멤버변수 y에 Test i 객체의 주소값을 가져감
+	System.out.println(o.getY().getX()); // o.getY()함수는 Test i의 주소값을 가지고 있음 
+}			  	       // 결국 i.getX()함수가 되어서 "10"의 값을 출력함
+
+
