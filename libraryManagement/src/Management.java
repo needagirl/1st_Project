@@ -87,6 +87,7 @@ public class Management {
 				String select = inData("메뉴화면(menu) 대출도서조회(1) 나의대출이력(2) ");
 				if(select.equals("1")) {
 					MainPage.headPage(userId);
+					
 				}else if(select.equals("2")) {
 					MainPage.headPage(userId);
 				}else if(select.equals("0")) {
