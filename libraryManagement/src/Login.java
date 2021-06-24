@@ -8,14 +8,23 @@ public class Login {
 	public Login() {
 	}
 	
-	public boolean loginCheck () {
+	public boolean loginCheck (String userId) {
 		UserData.basicUser();
 		boolean result = true;
-		String userId = inData("아이디");
-		String userPwd = inData("패스워드");
 		UserVO vo = UserData.userData.get(userId);
 		try {
 			String hasUserId = vo.getUserId();
+		} catch (NullPointerException npe) {
+			result = false;
+			System.out.println("일치하는 아이디가 없습니다.");
+		}
+		return result;
+	}
+	public boolean pwdCheck(String userId, String userPwd) {
+		UserData.basicUser();
+		boolean result = true;
+		UserVO vo = UserData.userData.get(userId);
+		try {
 			String hasUserPwd = vo.getUserPwd();
 			if (userPwd.equals(hasUserPwd)) {
 			}else {
@@ -24,12 +33,12 @@ public class Login {
 			}
 		} catch (NullPointerException npe) {
 			result = false;
-			System.out.println("일치하는 아이디가 없습니다.");
+			System.out.println("비밀번호가 틀렸습니다.");
 		}
 		return result;
 	}
 	public String inData(String msg) {
-		System.out.print(msg + "->");
+		System.out.print(msg + ">>");
 		return scan.nextLine();
 	}
 }

@@ -7,6 +7,6 @@ public class CheckOutData {
 	public CheckOutData() {
 	}
 	public static void BasicCheckout() {
-		checkout.put("고양이는 다 된다", new CheckOutVO("1","고양이는 다 된다","2021-06-20","2021-07-04","미확인"));
+		checkout.put("1", new CheckOutVO("1","고양이는 다 된다","2021-06-20","2021-07-04","미확인"));
 	}
 }

@@ -6,7 +6,12 @@ public class MainMethod {
 
 	public static void main(String[] args) {
 		Management mg = new Management();
-		mg.start();
+		do {
+			mg.start();
+			do {
+				mg.startLibrary();
+			}while(true);
+		}while(true);
 	}
 
 }
