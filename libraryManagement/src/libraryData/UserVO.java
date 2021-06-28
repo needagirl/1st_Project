@@ -34,15 +34,15 @@ public class UserVO {
 		
 		System.out.println("                                       개 인 정 보 확 인                                         ");
 		System.out.println("    ---------------------------------------------------------------------------------------    ");
-		System.out.println("    ┌───────────────────┬──────────────────────────────┐");
-		System.out.printf("    │ 1.이  름               	%s\n",name);
-		System.out.println("    ├───────────────────┼──────────────────────────────┤");
-		System.out.printf("    │ 2.생년월일              	%s년 %s월 %s일\n", year,month,day);
-		System.out.println("    ├───────────────────┼──────────────────────────────┤");
-		System.out.printf("    │ 3.비밀번호              	%s\n", userPwd);
-		System.out.println("    ├───────────────────┼──────────────────────────────┤");
-		System.out.printf("    │ 4.휴대폰 번호            	%s-%s-%s\n", first, mid, last);
-		System.out.println("    └───────────────────┴──────────────────────────────┘");
+		System.out.println("    ┌──────────────┬──────────────────────────────────────────────────────┐");
+		System.out.printf("    │ 1. 이  름                      	%s\n",name);
+		System.out.println("    ├──────────────┼──────────────────────────────────────────────────────┤");
+		System.out.printf("    │ 2. 생년월일                    	%s년 %s월 %s일\n", year,month,day);
+		System.out.println("    ├──────────────┼──────────────────────────────────────────────────────┤");
+		System.out.printf("    │ 3. 비밀번호                    	%s\n", userPwd);
+		System.out.println("    ├──────────────┼──────────────────────────────────────────────────────┤");
+		System.out.printf("    │ 4. 휴대폰 번호                  	%s-%s-%s\n", first, mid, last);
+		System.out.println("    └──────────────┴──────────────────────────────────────────────────────┘");
 		System.out.println();  
 	}
 	

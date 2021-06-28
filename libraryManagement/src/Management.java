@@ -1,7 +1,6 @@
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Scanner;
 
+import libraryData.CheckOutData;
 import libraryData.UserData;
 import libraryData.UserVO;
 
@@ -10,8 +9,8 @@ public class Management {
 	String userId;
 	boolean logResult = false;
 	Login log = new Login();
+	
 	public Management() {
-
 	}
 
 	public void start() {
@@ -19,133 +18,147 @@ public class Management {
 		this.userId = scan.nextLine();
 		logResult = log.loginCheck(userId);
 		if(logResult) {
+			int count =0;
 			do {
-				String pwd = inData("      \t\t\t\t   비밀번호 ");
+				String pwd = inData("\t\t\t                비밀번호 ");
 				boolean pwdResult =log.pwdCheck(userId,pwd);
 				if(pwdResult) {
-					System.out.println("\t로그인 되었습니다. 도서관에 오신걸 환영합니다.");
+					System.out.println("\n\t\t\t       로그인 되었습니다. 도서관에 오신걸 환영합니다.");
+					break;
+				}else {
+					count++;
+				}
+				if(count==3) {
+					System.out.println("비밀번호가 3회 틀렸습니다.");
+					userId = log.loginMenu();
 					break;
 				}
 			}while(true);
 		}else {
-			menu:
-			do {
-				String select = inData("로그인(1) 회원가입(2) 아이디찾기(3) 비밀번호찾기(4) \n입력>>");
-				if (select.equals("1")) {
-					this.userId = inData("아이디(이메일)");
-					logResult = log.loginCheck(userId);
-					if(logResult) {
-						do {
-							String pwd = inData("비밀번호를 입력하세요");
-							boolean pwdResult =log.pwdCheck(userId,pwd);
-							if(pwdResult) {
-								System.out.println("로그인 되었습니다.");
-								break menu;
-							}
-						}while(true);
-					}
-				}else if (select.equals("2")) {
-					SignIn signin = new SignIn();
-					signin.userInsert();
-				}else if (select.equals("3")) {
-					findId();
-				} else if (select.equals("4")) {
-					findPwd();
-				}else {
-					System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
-				}
-			}while(true);
+			userId = log.loginMenu();
 		}
 	}
 	
 	public void startLibrary() {
-		MainPage.headPage(userId);
-		MainPage.menuPage();
-		System.out.print("메뉴를 선택하세요 >> ");
-		String menu = scan.nextLine();
-		if (menu.equals("1")) {
-			do {
-				String select = inData("메뉴화면(menu) 통합자료검색(1) 추천도서(2) 베스트셀러(3) ");
-				if(select.equals("1")) {
-					MainPage.headPage(userId);
-				}else if(select.equals("2")) {
-					MainPage.headPage(userId);
-				}else if(select.equals("3")) {
-					MainPage.headPage(userId);
-				}else if(select.equals("0")) {
-					
-				}else if(select.equalsIgnoreCase("exit")) {
-					System.exit(0);
-				}else if(select.equalsIgnoreCase("menu")) {
-					break;
+		do {
+			MainPage.headPage(userId);
+			MainPage.menuPage();
+			System.out.print("메뉴를 선택하세요 >> ");
+			String menu = scan.nextLine();
+			if (menu.equals("1")) {
+				do {
+					String select = inData("메뉴화면(menu) 통합자료검색(1) 추천도서(2) ");
+					if(select.equals("1")) {
+						MainPage.headPage(userId);
+						String search = inData("\n\n    \t\t\t\t통합검색 ");
+						Search.head();
+						Search.findBook(search);
+					}else if(select.equals("2")) {
+						MainPage.headPage(userId);
+						Search.recomend();
+					}else if(select.equals("0")) {
+						return;
+					}else if(select.equalsIgnoreCase("exit")) {
+						System.exit(0);
+					}else if(select.equalsIgnoreCase("menu")) {
+						break;
+					}else {
+						System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
+					}
+				}while(true);
+			}else if (menu.equals("2")) {
+				
+				do {
+					String select = inData("메뉴화면(menu) 대출도서조회(1) 나의대출이력(2) ");
+					UserVO vo = UserData.userData.get(userId);
+					String userNum = vo.getUserNum();
+					if(select.equals("1")) {
+						MainPage.headPage(userId);
+						CheckOut.checkOutBook(userNum);
+					}else if(select.equals("2")) {
+						MainPage.headPage(userId);
+						CheckOut.returnBook(userNum);
+					}else if(select.equals("0")) {
+						return;
+					}else if(select.equalsIgnoreCase("exit")) {
+						System.exit(0);
+					}else if(select.equalsIgnoreCase("menu")) {
+						break;
+					}else {
+						System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
+					}
+				}while(true);
+			}else if (menu.equals("3")) {
+				do {
+					String select = inData("메뉴화면(menu) 이용시간(1) 휴관일(2) 오시는길(3) ");
+					if(select.equals("1")) {
+						MainPage.headPage(userId);
+						MainPage.infoUse();
+					}else if(select.equals("2")) {
+						MainPage.headPage(userId);
+						MainPage.infoHolyday();
+					}else if(select.equals("3")) {
+						MainPage.headPage(userId);
+						MainPage.infoWay();
+					}else if(select.equals("0")) {
+						return;
+					}else if(select.equalsIgnoreCase("exit")) {
+						System.exit(0);
+					}else if(select.equalsIgnoreCase("menu")) {
+						break;
+					}else {
+						System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
+					}
+				}while(true);
+			}else if (menu.equals("4")) {
+				do {
+					String select = inData("메뉴화면(menu) 본인정보확인(1) ");
+					if(select.equals("1")) {
+						findMyInfo();
+					}else if(select.equals("0")) {
+						return;
+					}else if(select.equalsIgnoreCase("exit")) {
+						System.exit(0);
+					}else if(select.equalsIgnoreCase("menu")) {
+						break;
+					}else {
+						System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
+					}
+				}while(true);
+			}else if (menu.equals("0")) {
+				return;
+			}else if (menu.equalsIgnoreCase("exit")) {
+				System.exit(0);
+			}else if (menu.equals("99")) {
+				if(userId.equals("admin@gmail.com")) {
+					CheckOutData.BasicCheckOut();
+					do {
+						Manager ma = new Manager();
+						ma.managerMenu();
+						System.out.print("\t\t메뉴선택 >> ");
+						String select = scan.nextLine();
+						if(select.equals("1")) {
+							ma.manageBook();
+						}else if(select.equals("2")) {
+							ma.manegeCheckout();
+						}else if(select.equals("3")) {
+							ma.manegeUser();
+						}else if(select.equals("0")) {
+							return;
+						}else if(select.equalsIgnoreCase("exit")) {
+							System.exit(0);
+						}else {
+							System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
+						}
+					}while(true);
 				}else {
-					System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
-				}
-			}while(true);
-		}else if (menu.equals("2")) {
-			do {
-				String select = inData("메뉴화면(menu) 대출도서조회(1) 나의대출이력(2) ");
-				if(select.equals("1")) {
-					MainPage.headPage(userId);
-					
-				}else if(select.equals("2")) {
-					MainPage.headPage(userId);
-				}else if(select.equals("0")) {
-					
-				}else if(select.equalsIgnoreCase("exit")) {
-					System.exit(0);
-				}else if(select.equalsIgnoreCase("menu")) {
+					System.out.println("적합한 사용자가 아닙니다.");
 					break;
-				}else {
-					System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
 				}
-			}while(true);
-		}else if (menu.equals("3")) {
-			do {
-				String select = inData("메뉴화면(menu) 이용시간(1) 휴관일(2) 오시는길(3) ");
-				if(select.equals("1")) {
-					MainPage.headPage(userId);
-					MainPage.infoUse();
-				}else if(select.equals("2")) {
-					MainPage.headPage(userId);
-					MainPage.infoHolyday();
-				}else if(select.equals("3")) {
-					MainPage.headPage(userId);
-					MainPage.infoWay();
-				}else if(select.equals("0")) {
-					
-				}else if(select.equalsIgnoreCase("exit")) {
-					System.exit(0);
-				}else if(select.equalsIgnoreCase("menu")) {
-					break;
-				}else {
-					System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
-				}
-			}while(true);
-		}else if (menu.equals("4")) {
-			do {
-				String select = inData("메뉴화면(menu) 본인정보확인(1) 예약내역(2) ");
-				if(select.equals("1")) {
-					findMyInfo();
-				}else if(select.equals("2")) {
-					
-				}else if(select.equals("0")) {
-					
-				}else if(select.equalsIgnoreCase("exit")) {
-					System.exit(0);
-				}else if(select.equalsIgnoreCase("menu")) {
-					break;
-				}else {
-					System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
-				}
-			}while(true);
-		}else if (menu.equals("0")) {
-			
-		}else if (menu.equalsIgnoreCase("exit")) {
-			System.exit(0);
-		}else {
-			System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
-		}
+			}else {
+				System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
+			}
+		}while(true);
 	}
 	
 	public void findMyInfo() {
@@ -230,50 +243,6 @@ public class Management {
 		}else if(select.equals("back")) {
 		}else{
 			System.out.println("입력이 옳지 않습니다. 다시 한 번 확인해주세요.");
-		}
-	}
-	
-	public void findId() {
-		String tel = inData("회원가입시 입력한 전화번호를 입력하세요('-'구분없이)");
-		Collection<UserVO> list = UserData.userData.values();
-		Iterator<UserVO> ii = list.iterator();
-		String id = "";
-		while (ii.hasNext()) {
-			UserVO vo = ii.next();
-			if(tel.equals(vo.getTel())) {
-				System.out.println("가입하신 아이디는 "+vo.getUserId()+" 입니다.");
-				id = vo.getUserId();
-			}
-		}
-		if(id=="") {
-			System.out.println("일치하는 아이디가 없습니다.");
-		}
-	}
-
-	public void findPwd() {
-		String userId = inData("회원가입시 입력한 아이디를 입력하세요(이메일)");
-		String tel = inData("회원가입시 입력한 전화번호를 입력하세요('-'구분없이 입력)");
-		Collection<UserVO> list = UserData.userData.values();
-		Iterator<UserVO> ii = list.iterator();
-		String pwd = "";
-		while (ii.hasNext()) {
-			UserVO vo = ii.next();
-			if(userId.equals(vo.getUserId())&&tel.equals(vo.getTel())) {
-				System.out.println(userId+"의 비밀번호는 "+vo.getUserPwd()+"입니다.");
-				pwd = vo.getUserPwd();
-			}
-		}
-		if(pwd=="") {
-			System.out.println("일치하는 아이디가 없습니다.");
-		}
-	}
-
-	public void allUserList() {
-		Collection<UserVO> list = UserData.userData.values();
-		Iterator<UserVO> ii = list.iterator();
-		while (ii.hasNext()) {
-			UserVO vo = ii.next();
-			vo.userPrint();
 		}
 	}
 

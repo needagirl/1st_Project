@@ -1,4 +1,3 @@
-
 public class MainMethod {
 
 	public MainMethod() {
@@ -8,9 +7,7 @@ public class MainMethod {
 		Management mg = new Management();
 		do {
 			mg.start();
-			do {
-				mg.startLibrary();
-			}while(true);
+			mg.startLibrary();
 		}while(true);
 	}
 
